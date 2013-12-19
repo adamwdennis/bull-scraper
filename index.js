@@ -1,7 +1,16 @@
 var jsdom = require('jsdom');
 var request = require('request');
 
-var symbols = ['CRM', 'FB', 'AAPL', 'GOOG', 'AMZN'];
+var symbols = [];
+process.argv.forEach(function(val, index, array) {
+  if (index > 1) {
+    symbols.push(val);
+  }
+});
+
+if (symbols.length == 0) {
+  throw new Error("Please pass ticker symbols, separated by spaces");
+}
 
 function checkSignal(symbol, cb) {
   request( {
@@ -22,8 +31,15 @@ function checkSignal(symbol, cb) {
   });
 }
 
+console.log("------------------------------");
+console.log("Welcome to BullScraper v0.0.1");
+console.log(" - a page scraper for American Bulls");
+console.log("------------------------------\n");
 symbols.forEach(function(symbol) {
   checkSignal(symbol, function(signal, text) {
-    console.log(symbol, "-", signal, "-", text);
+    console.log("Ticker:", symbol);
+    console.log("Signal:", signal);
+    console.log("Comments:", text);
+    console.log("------------------------------");
   });
 })
