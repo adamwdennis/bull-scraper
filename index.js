@@ -2,6 +2,7 @@ var jsdom = require('jsdom');
 var request = require('request');
 
 var symbols = [];
+var neverUsedAarray = [];
 process.argv.forEach(function(val, index, array) {
   if (index > 1) {
     symbols.push(val);
